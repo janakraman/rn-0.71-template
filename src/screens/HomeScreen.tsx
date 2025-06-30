@@ -17,20 +17,20 @@ const HomeScreen: React.FC<Props> = ({navigation}) => {
       <View style={styles.content}>
         <Text style={styles.title}>Welcome to MyNewApp</Text>
         <Text style={styles.subtitle}>Home Screen</Text>
-        
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Profile')}>
             <Text style={styles.buttonText}>Go to Profile</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Settings')}>
             <Text style={styles.buttonText}>Go to Settings</Text>
           </TouchableOpacity>
-          
+
           <TouchableOpacity
             style={styles.button}
             onPress={() =>

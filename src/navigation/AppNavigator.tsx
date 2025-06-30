@@ -5,7 +5,7 @@ import type {RootStackParamList} from './types';
 
 // Import screens
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen, {profileScreenOptions} from '../screens/ProfileScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 
@@ -35,9 +35,9 @@ const AppNavigator: React.FC = () => {
         <Stack.Screen
           name="Profile"
           component={ProfileScreen}
-          options={{
-            title: 'Test',
-          }}
+          options={({navigation, route}) =>
+            profileScreenOptions(navigation, route)
+          }
         />
         <Stack.Screen
           name="Settings"

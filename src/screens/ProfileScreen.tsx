@@ -5,15 +5,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
 } from 'react-native';
-import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type {NativeStackNavigationOptions, NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {RootStackParamList} from '../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Profile'>;
 
 const ProfileScreen: React.FC<Props> = ({navigation}) => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={{...styles.container, backgroundColor: 'white'}}>
       <View style={styles.content}>
         <Text style={styles.title}>Profile Screen</Text>
         <Text style={styles.subtitle}>User Profile Information</Text>
@@ -31,12 +32,55 @@ const ProfileScreen: React.FC<Props> = ({navigation}) => {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.goBack()}>
-          <Text style={styles.buttonText}>Go Back</Text>
+          onPress={() => navigation.push('Profile')}>
+          <Text style={styles.buttonText}>Push Navigate to Profile</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
+};
+
+export const profileScreenOptions = (
+  navigation?: NativeStackScreenProps<
+    RootStackParamList,
+    'Profile'
+  >['navigation'],
+  route?: NativeStackScreenProps<RootStackParamList, 'Profile'>['route'],
+): NativeStackNavigationOptions => {
+  return {
+    title: 'Profile',
+    headerStyle: {
+      backgroundColor: 'blue',
+    },
+    headerTintColor: '#fff',
+    headerLeft: () => (
+      <TouchableOpacity
+        style={styles.headerButton}
+        onPress={() => {
+          if (navigation) {
+            navigation.goBack();
+          } else {
+            Alert.alert('Back', 'Navigate back pressed!');
+          }
+        }}>
+        <Text style={styles.headerButtonText}>←</Text>
+      </TouchableOpacity>
+    ),
+    headerRight: () => (
+      <View style={styles.headerRightContainer}>
+        <TouchableOpacity
+          style={styles.headerButton}
+          onPress={() => Alert.alert('Edit', 'Edit profile pressed!')}>
+          <Text style={styles.headerButtonText}>✏️</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.headerButton, {marginLeft: 15}]}
+          onPress={() => Alert.alert('Settings', 'Profile settings pressed!')}>
+          <Text style={styles.headerButtonText}>⚙️</Text>
+        </TouchableOpacity>
+      </View>
+    ),
+  };
 };
 
 const styles = StyleSheet.create({
@@ -96,6 +140,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: '600',
+  },
+  // Header component styles
+  headerButton: {
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+  headerButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  headerRightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 });
 
